@@ -3,12 +3,16 @@
 import React, { useState, useEffect } from "react";
 
 const CompoundInterestCalculator = () => {
-  const [monthlyInvestment, setMonthlyInvestment] = useState(100);
-  const [annualReturn, setAnnualReturn] = useState(10);
+  const [monthlyInvestment, setMonthlyInvestment] = useState("");
+  const [annualReturn, setAnnualReturn] = useState("");
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    calculateCompoundInterest();
+    if (monthlyInvestment && annualReturn) {
+      calculateCompoundInterest();
+    } else {
+      setResults([]);
+    }
   }, [monthlyInvestment, annualReturn]);
 
   const calculateCompoundInterest = () => {
@@ -16,13 +20,12 @@ const CompoundInterestCalculator = () => {
     const newResults = [];
 
     for (let year = 1; year <= 15; year++) {
-      const monthlyReturn = annualReturn / 12 / 100;
       totalPortfolio =
-        (totalPortfolio + monthlyInvestment * 12) * (1 + annualReturn / 100);
+        (totalPortfolio + Number(monthlyInvestment) * 12) *
+        (1 + Number(annualReturn) / 100);
 
       newResults.push({
         year,
-        monthlyInvestment,
         totalPortfolio: totalPortfolio.toFixed(2),
       });
     }
@@ -31,60 +34,89 @@ const CompoundInterestCalculator = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Birleşik Faiz Hesaplama</h1>
+    <div className="p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+        Yatırımım Ne Kadar?
+      </h1>
 
-      <div className="mb-4">
-        <label className="block mb-2">
-          Aylık Yatırım ($):
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Aylık Yatırım ($)
+          </label>
           <input
             type="number"
             value={monthlyInvestment}
-            onChange={(e) => setMonthlyInvestment(Number(e.target.value))}
-            className="border rounded px-2 py-1 ml-2"
+            onChange={(e) => setMonthlyInvestment(e.target.value)}
+            placeholder="Aylık yatırım miktarını girin"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
-        </label>
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-2">
-          Yıllık Kazanç Oranı (%):
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Yıllık Kazanç Oranı (%)
+          </label>
           <input
             type="number"
             value={annualReturn}
-            onChange={(e) => setAnnualReturn(Number(e.target.value))}
-            className="border rounded px-2 py-1 ml-2"
+            onChange={(e) => setAnnualReturn(e.target.value)}
+            placeholder="Yıllık kazanç oranını girin"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
-        </label>
+        </div>
       </div>
 
-      <div className="mb-4">
-        <p className="text-sm italic">
+      <div className="mb-8">
+        <p className="text-sm italic text-gray-600">
           Not: Hesaplamada, tüm temettüler ve kazançlar yeniden yatırılmakta,
           hiçbir para çıkışı olmamaktadır.
         </p>
       </div>
 
-      <h2 className="text-xl font-semibold mb-2">
-        Yıllık Kazanç Miktarı (Yıllık {annualReturn}% Kazanç)
-      </h2>
+      {results.length > 0 ? (
+        <>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+            Yıllık Kazanç Miktarı (Yıllık {annualReturn}% Kazanç)
+          </h2>
 
-      <thead>
-        <tr>
-          <th>Yıl</th>
-          <th>Aylık Yatırım ($)</th>
-          <th>Toplam Portföy ($)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {results.map((row) => (
-          <tr key={row.year}>
-            <td>{row.year}</td>
-            <td>{row.monthlyInvestment}</td>
-            <td>{row.totalPortfolio}</td>
-          </tr>
-        ))}
-      </tbody>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Yıl
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Toplam Portföy ($)
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {results.map((row) => (
+                  <tr
+                    key={row.year}
+                    className="hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {row.year}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {parseFloat(row.totalPortfolio).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : (
+        <p className="text-center text-gray-600 mt-8">
+          Lütfen aylık yatırım miktarı ve yıllık kazanç oranını girin.
+        </p>
+      )}
     </div>
   );
 };
