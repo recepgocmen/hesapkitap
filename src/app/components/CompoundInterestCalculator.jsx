@@ -31,59 +31,79 @@ const CompoundInterestCalculator = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Birleşik Faiz Hesaplama</h1>
+    <div className="p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+        Yatırımım Ne Kadar?
+      </h1>
 
-      <div className="mb-4">
-        <label className="block mb-2">
-          Aylık Yatırım ($):
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Aylık Yatırım ($)
+          </label>
           <input
             type="number"
             value={monthlyInvestment}
             onChange={(e) => setMonthlyInvestment(Number(e.target.value))}
-            className="border rounded px-2 py-1 ml-2"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
-        </label>
-      </div>
-
-      <div className="mb-4">
-        <label className="block mb-2">
-          Yıllık Kazanç Oranı (%):
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Yıllık Kazanç Oranı (%)
+          </label>
           <input
             type="number"
             value={annualReturn}
             onChange={(e) => setAnnualReturn(Number(e.target.value))}
-            className="border rounded px-2 py-1 ml-2"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
           />
-        </label>
+        </div>
       </div>
 
-      <div className="mb-4">
-        <p className="text-sm italic">
+      <div className="mb-8">
+        <p className="text-sm italic text-gray-600">
           Not: Hesaplamada, tüm temettüler ve kazançlar yeniden yatırılmakta,
           hiçbir para çıkışı olmamaktadır.
         </p>
       </div>
 
-      <h2 className="text-xl font-semibold mb-2">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         Yıllık Kazanç Miktarı (Yıllık {annualReturn}% Kazanç)
       </h2>
-      <table className="w-full border-collapse border">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">Yıl</th>
-            <th className="border p-2">Toplam Portföy ($)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {results.map((row) => (
-            <tr key={row.year} className="hover:bg-gray-100">
-              <td className="border p-2">{row.year}</td>
-              <td className="border p-2">{row.totalPortfolio}</td>
+
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Yıl
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Toplam Portföy ($)
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {results.map((row) => (
+              <tr
+                key={row.year}
+                className="hover:bg-gray-50 transition-colors duration-200"
+              >
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {row.year}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  {parseFloat(row.totalPortfolio).toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
