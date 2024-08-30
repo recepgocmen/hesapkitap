@@ -1,6 +1,19 @@
 # Dividend Calculation Application
 
+Live: https://hesapkitap.vercel.app/
+
+## Overview
+
+<img width="1913" alt="Screenshot 2024-08-30 at 17 08 20" src="https://github.com/user-attachments/assets/08647efc-1867-4734-9a7f-2b3352fb3d0f">
+
 This project allows users to calculate their potential earnings based on their monthly investments and annual return rates.
+
+# Reason for the Project
+
+I created this project because AI applications tend to view this calculation as a complicated process and often limit the number of iterations allowed. Additionally, they sometimes provide inaccurate calculations.
+
+<img width="800" alt="Screenshot 2024-08-30 at 17 11 15" src="https://github.com/user-attachments/assets/c342718a-5166-4b0a-b11e-cb93b76929b7">
+
 
 ## Features
 
