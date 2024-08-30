@@ -68,23 +68,22 @@ const CompoundInterestCalculator = () => {
       <h2 className="text-xl font-semibold mb-2">
         Yıllık Kazanç Miktarı (Yıllık {annualReturn}% Kazanç)
       </h2>
-
-      <thead>
-        <tr>
-          <th>Yıl</th>
-          <th>Aylık Yatırım ($)</th>
-          <th>Toplam Portföy ($)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {results.map((row) => (
-          <tr key={row.year}>
-            <td>{row.year}</td>
-            <td>{row.monthlyInvestment}</td>
-            <td>{row.totalPortfolio}</td>
+      <table className="w-full border-collapse border">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="border p-2">Yıl</th>
+            <th className="border p-2">Toplam Portföy ($)</th>
           </tr>
-        ))}
-      </tbody>
+        </thead>
+        <tbody>
+          {results.map((row) => (
+            <tr key={row.year} className="hover:bg-gray-100">
+              <td className="border p-2">{row.year}</td>
+              <td className="border p-2">{row.totalPortfolio}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
