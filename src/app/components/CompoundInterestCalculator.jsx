@@ -20,13 +20,14 @@ const CompoundInterestCalculator = () => {
     const newResults = [];
 
     for (let year = 1; year <= 15; year++) {
-      totalPortfolio =
-        (totalPortfolio + Number(monthlyInvestment) * 12) *
-        (1 + Number(annualReturn) / 100);
+      totalPortfolio += Number(monthlyInvestment) * 12;
+      const annualGain = totalPortfolio * (Number(annualReturn) / 100);
+      totalPortfolio += annualGain;
 
       newResults.push({
         year,
         totalPortfolio: totalPortfolio.toFixed(2),
+        annualGain: annualGain.toFixed(2),
       });
     }
 
@@ -68,8 +69,8 @@ const CompoundInterestCalculator = () => {
 
       <div className="mb-8">
         <p className="text-sm italic text-gray-600">
-          Not: Hesaplamada, tüm temettüler ve kazançlar yeniden yatırılmakta,
-          hiçbir para çıkışı olmamaktadır.
+          Not: Hesaplamada, tüm kazançlar yeniden yatırılmakta, hiçbir para
+          çıkışı olmamaktadır.
         </p>
       </div>
 
@@ -89,6 +90,9 @@ const CompoundInterestCalculator = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Toplam Portföy ($)
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    1 Yıllık Kazanç ($)
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -102,6 +106,12 @@ const CompoundInterestCalculator = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {parseFloat(row.totalPortfolio).toLocaleString("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {parseFloat(row.annualGain).toLocaleString("en-US", {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
