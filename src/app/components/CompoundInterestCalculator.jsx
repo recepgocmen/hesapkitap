@@ -35,7 +35,7 @@ const CompoundInterestCalculator = () => {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
+    <div className="md:p-8 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
         Yatırımım Ne Kadar?
       </h1>
@@ -50,7 +50,7 @@ const CompoundInterestCalculator = () => {
             value={monthlyInvestment}
             onChange={(e) => setMonthlyInvestment(e.target.value)}
             placeholder="Aylık yatırım miktarını girin"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-blue-900"
           />
         </div>
         <div>
@@ -62,7 +62,7 @@ const CompoundInterestCalculator = () => {
             value={annualReturn}
             onChange={(e) => setAnnualReturn(e.target.value)}
             placeholder="Yıllık kazanç oranını girin"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-900 transition"
           />
         </div>
       </div>
